@@ -1,13 +1,22 @@
 import products from "./products.json";
 
 class Product {
-  constructor(name: string, price: number) {
+  constructor(name: string, price: number, id?: number) {
     this.name = name;
     this.price = price;
+    this.id = id;
   }
   id: number;
   name: string;
   price: number;
+
+  // agregando el metodo estatico "findProductsBelow"
+  static findProductsBelow(precioBase: number) {
+    const productosFiltrados = products.filter((producto) => {
+      return producto.price <= precioBase;
+    });
+    return productosFiltrados;
+  }
 }
 
 class User {
@@ -19,11 +28,9 @@ class User {
   addProduct(newProduct: Product) {
     this.products.push(newProduct);
   }
+
   addProducts(newProducts: Product[]) {
-    // esto no funciona:
-    this.products.push(newProducts);
-    // pista: push no suma muchos items (agrega de a uno)
+    this.products = this.products.concat(newProducts);
   }
 }
-
 export { User, Product };
